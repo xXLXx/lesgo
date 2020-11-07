@@ -1,11 +1,8 @@
-import middy from 'middy';
+import middy from '@middy/core';
 import httpMiddleware from 'Middlewares/httpMiddleware';
 import verifyJwtMiddleware from 'Middlewares/verifyJwtMiddleware';
-import { connectSentry } from 'Utils/sentry';
-import ping from 'Core/ping';
+import ping from 'Core/utils/ping';
 import app from 'Config/app';
-
-connectSentry();
 
 const originalHandler = event => {
   return ping(event.input);

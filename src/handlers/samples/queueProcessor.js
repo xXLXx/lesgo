@@ -1,10 +1,6 @@
-import middy from 'middy';
+import middy from '@middy/core';
 import normalizeSQSMessageMiddleware from 'Middlewares/normalizeSQSMessageMiddleware';
-import { connectSentry } from 'Utils/sentry';
 import ErrorException from 'Exceptions/ErrorException';
-import { PING_QUEUE_PROCESSOR_SAMPLE_ERROR } from 'Constants/errorCodes';
-
-connectSentry();
 
 const originalHandler = event => {
   const { collection } = event;
@@ -16,7 +12,7 @@ const originalHandler = event => {
 
   throw new ErrorException(
     'Sample processed queue error',
-    PING_QUEUE_PROCESSOR_SAMPLE_ERROR,
+    'PING_QUEUE_PROCESSOR_SAMPLE_ERROR',
     400
   );
 };

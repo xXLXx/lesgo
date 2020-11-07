@@ -1,11 +1,8 @@
 /* eslint-disable no-console */
-import middy from 'middy';
+import middy from '@middy/core';
 import httpMiddleware from 'Middlewares/httpMiddleware';
-import { connectSentry } from 'Utils/sentry';
 import app from 'Config/app';
-import ping from 'Core/ping';
-
-connectSentry();
+import ping from 'Core/utils/ping';
 
 const originalHandler = event => {
   return ping(event.input);

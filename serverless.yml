@@ -1,9 +1,7 @@
-service:
-  name: sls-lesgo
+service: sls-lesgo
 
 plugins:
   - serverless-webpack
-  - serverless-api-compression
   - serverless-offline
   - serverless-plugin-log-retention
   - serverless-dotenv-plugin
@@ -31,32 +29,6 @@ provider:
     SITE: shared
     PRODUCT: ${self:service}
     STAGE: ${self:provider.stage}
-  vpc:
-    securityGroupIds:
-      - Ref: LambdaSecurityGroup
-    subnetIds:
-      - Ref: PrivateSubnet1
-      - Ref: PrivateSubnet2
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - 'elasticache:*'
-      Resource: '*'
-    - Effect: Allow
-      Action:
-        - 'sqs:*'
-      Resource: '*'
-    - Effect: Allow
-      Action:
-        - 'es:*'
-      Resource: '*'
-
-  # TODO Review if this is still relevant
-  # environment:
-  #   ES_NODE:
-  #     "Fn::GetAtt": ["ElasticsearchInstance", "DomainEndpoint"]
-  #   ELASTICACHE_MEMCACHED_URL:
-  #     "Fn::Join": [":", ["Fn::GetAtt": [MemcachedCluster, ConfigurationEndpoint.Address], "Fn::GetAtt": [MemcachedCluster, ConfigurationEndpoint.Port]]]
 
 custom:
   path:
@@ -65,6 +37,7 @@ custom:
     resources: config/resources
   serverless-offline:
     port: 8888
+    ignoreJWTSignature: true
   webpack:
     packager: yarn
   logRetentionInDays: ${env:AWS_LOG_RETENTION_DAYS, 7}
@@ -77,7 +50,7 @@ custom:
 
 # Add all the functions here
 functions:
-  - ${file(${self:custom.path.functions}/ping.yml)}
+  - ${file(${self:custom.path.functions}/utils.yml)}
   - ${file(${self:custom.path.functions}/samples.yml)}
 
 # Add all the additional resources here

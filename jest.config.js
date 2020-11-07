@@ -7,27 +7,20 @@ module.exports = {
     '!src/handlers/**/*.js',
   ],
   coverageReporters: ['html', 'text', 'lcov'],
-  // coverageThreshold: {
-  //   global: {
-  //     branches: 80,
-  //     functions: 80,
-  //     lines: 80,
-  //     statements: 80,
-  //   },
-  // },
   setupFiles: ['./tests/setupTest.js'],
   moduleNameMapper: {
     '^Config(.*)$': '<rootDir>/src/config$1',
-    '^Constants/errorCodes(.*)$': '<rootDir>/src/constants/errorCodes$1',
     '^Core(.*)$': '<rootDir>/src/core$1',
-    '^Exceptions/ErrorException(.*)$':
-      '<rootDir>/src/exceptions/ErrorException$1',
+    '^Exceptions(.*)$': '<rootDir>/src/exceptions$1',
     '^Models(.*)$': '<rootDir>/src/models$1',
-    '^Utils/logger$': '<rootDir>/tests/__mocks__/utils/logger.js',
-    '^Utils/queue$': '<rootDir>/tests/__mocks__/utils/queue.js',
-    '^Utils/database$': '<rootDir>/node_modules/lesgo/src/utils/database.js',
-    '^Utils/sentry$': '<rootDir>/node_modules/lesgo/src/utils/sentry.js',
-    '^@sentry/node$': '<rootDir>/node_modules/@sentry/node/dist/index.js',
+    '^Services(.*)$': [
+      '<rootDir>/src/services$1',
+      '<rootDir>/node_modules/lesgo/src/services$1',
+    ],
+    '^Utils(.*)$': [
+      '<rootDir>/src/utils$1',
+      '<rootDir>/node_modules/lesgo/src/utils$1',
+    ],
   },
   transformIgnorePatterns: ['/node_modules/(?!lesgo).+\\.js$'],
 };
